@@ -77,48 +77,68 @@ const convertToNums = (teams, numbers) => {
       for (let i = 0; i < ruckSplit.length; i++) {
         ruckSplit[i] = numbers[ruckSplit[i]];
       }
-      teamAsNumbers.push(ruckSplit.sort((a,b) => a-b))
+      teamAsNumbers.push(ruckSplit.sort((a, b) => a - b));
     }
-    newTeams.push(teamAsNumbers)
+    newTeams.push(teamAsNumbers);
   }
-  return newTeams
+  return newTeams;
 };
 //algorithm to find common elements of three sorted arrays
 const findCommonNumber = (arr1, arr2, arr3, n1, n2, n3) => {
-    let commonNumbers = []
-    //start indexs for respective arrays (arr1 = i, arr2 = j, arr3 = k)
-    let i = j = k = 0
-    //iterate all arrays while they have elements to inspect
-    //n values are length of respective arrays
-    while (i < n1 && j < n2 && k < n3) {
-        //if x = y and y = z, push to commons array and increment all
-        if (arr1[i] == arr2[j] && arr2[j] == arr3[k]) {
-            commonNumbers.push(arr1[i])
-            i++;
-            j++;
-            k++
-        } 
-        
-        //x < y - arr1[i] is smallest value, increment i
-        else if (arr1[i] < arr2[j]) i++;
-
-        //y < z - arr2[j] is smallest value, increment j
-        else if (arr2[j] < arr3[k]) j++;
-        
-        //reached if x > y and y > z, therefore arr3[k] is smallest value, increment k
-        else k++;
-
+  let commonNumbers = [];
+  //start indexs for respective arrays (arr1 = i, arr2 = j, arr3 = k)
+  let i = (j = k = 0);
+  //iterate all arrays while they have elements to inspect
+  //n values are length of respective arrays
+  while (i < n1 && j < n2 && k < n3) {
+    //if x = y and y = z, push to commons array and increment all
+    if (arr1[i] == arr2[j] && arr2[j] == arr3[k]) {
+      commonNumbers.push(arr1[i]);
+      i++;
+      j++;
+      k++;
     }
-    const uniqueCommon = []
-    for (let number of commonNumbers) {
-        if (uniqueCommon.indexOf(number) === -1) {
-            uniqueCommon.push(number)
-        }
+
+    //x < y - arr1[i] is smallest value, increment i
+    else if (arr1[i] < arr2[j]) i++;
+    //y < z - arr2[j] is smallest value, increment j
+    else if (arr2[j] < arr3[k]) j++;
+    //reached if x > y and y > z, therefore arr3[k] is smallest value, increment k
+    else k++;
+  }
+  const uniqueCommon = [];
+  for (let number of commonNumbers) {
+    if (uniqueCommon.indexOf(number) === -1) {
+      uniqueCommon.push(number);
     }
-    return uniqueCommon
-}
+  }
+  return uniqueCommon;
+};
 
 const teams = splitIntoTeams(rucks);
-const teamsAsNums = convertToNums(teams, priorities)
-console.log(teams)
+const teamsAsNums = convertToNums(teams, priorities);
+console.log(teams);
 console.log(teamsAsNums);
+
+const getArrayOfCommonElements = (arrayOfTeams) => {
+  const allCommons = [];
+  for (const team of arrayOfTeams) {
+    const uniqueAmongTeam = findCommonNumber(
+      team[0],
+      team[1],
+      team[2],
+      team[0].length,
+      team[1].length,
+      team[2].length
+    );
+    allCommons.push(uniqueAmongTeam)
+  }
+  return allCommons
+};
+
+const commonElements = getArrayOfCommonElements(teamsAsNums).flat()
+const total = commonElements.reduce((acc, next) => acc + next, 0)
+console.log(commonElements)
+console.log(total)
+
+
