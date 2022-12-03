@@ -87,7 +87,7 @@ const convertToNums = (teams, numbers) => {
 const findCommonNumber = (arr1, arr2, arr3, n1, n2, n3) => {
   let commonNumbers = [];
   //start indexs for respective arrays (arr1 = i, arr2 = j, arr3 = k)
-  let i = (j = k = 0);
+  let i = j = k = 0;
   //iterate all arrays while they have elements to inspect
   //n values are length of respective arrays
   while (i < n1 && j < n2 && k < n3) {
