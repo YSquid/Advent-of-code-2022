@@ -117,8 +117,6 @@ const findCommonNumber = (arr1, arr2, arr3, n1, n2, n3) => {
 
 const teams = splitIntoTeams(rucks);
 const teamsAsNums = convertToNums(teams, priorities);
-console.log(teams);
-console.log(teamsAsNums);
 
 const getArrayOfCommonElements = (arrayOfTeams) => {
   const allCommons = [];
@@ -138,7 +136,6 @@ const getArrayOfCommonElements = (arrayOfTeams) => {
 
 const commonElements = getArrayOfCommonElements(teamsAsNums).flat()
 const total = commonElements.reduce((acc, next) => acc + next, 0)
-console.log(commonElements)
 console.log(total)
 
 
