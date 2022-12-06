@@ -41,5 +41,4 @@ const checkRanges = rangedOut.map((pair) => {
 })
 
 const sumMatches = checkRanges.reduce((acc, next) => acc + next)
-console.log(checkRanges)
 console.log(sumMatches)
