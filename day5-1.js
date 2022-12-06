@@ -40,16 +40,14 @@ const instructionNumbers = instructionsSplit.map((instruction) =>
   })
 );
 
+//parsed and cleaned inputs
+
 const instructionIntegers = instructionNumbers.map((instruction) =>
   instruction.map((step) => {
     return parseInt(step);
   })
 );
-
 const readyStacks = stacked(stacksString);
-
-// console.log(instructionIntegers);
-// console.log(readyStacks);
 
 const moveStacks = (stacks, instructions) => {
   for (let instruction of instructions) {
@@ -63,7 +61,7 @@ const moveStacks = (stacks, instructions) => {
   return stacks;
 };
 
-// console.log(moveStacks(readyStacks, instructionIntegers))
+console.log(moveStacks(readyStacks, instructionIntegers))
 
 const moveStacks9001 = (stacks, instructions) => {
   for (let instruction of instructions) {
