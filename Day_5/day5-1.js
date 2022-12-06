@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { setPrint } = require("readline-sync");
 
 const stacksString = fs.readFileSync("./stacks.txt").toString().split(/\n/);
 const stacks = [[], [], [], [], [], [], [], [], []];
@@ -27,7 +26,6 @@ const stacked = (arr) => {
   });
   return finalStacks;
 };
-// console.log(stacked(stacksString));
 
 const instructions = fs
   .readFileSync("./instructions.txt")
@@ -36,11 +34,52 @@ const instructions = fs
 const instructionsSplit = instructions.map((instruction) => {
   return instruction.split(" ");
 });
-const instructionNumbers = instructionsSplit.map(instruction => instruction.filter((word) => {
-    return word !== 'move' & word !== 'from' & word !== 'to'
-}))
+const instructionNumbers = instructionsSplit.map((instruction) =>
+  instruction.filter((word) => {
+    return (word !== "move") & (word !== "from") & (word !== "to");
+  })
+);
 
-const instructionIntegers = instructionNumbers.map(instruction => instruction.map((step) => {
-    return parseInt(step)
-}))
-console.log(instructionIntegers);
+const instructionIntegers = instructionNumbers.map((instruction) =>
+  instruction.map((step) => {
+    return parseInt(step);
+  })
+);
+
+const readyStacks = stacked(stacksString);
+
+// console.log(instructionIntegers);
+// console.log(readyStacks);
+
+const moveStacks = (stacks, instructions) => {
+  for (let instruction of instructions) {
+    let amountMoved = instruction[0];
+    let movedFromIndex = instruction[1] - 1;
+    let movedToIndex = instruction[2] - 1;
+    for (let i = 0; i < amountMoved; i++) {
+      stacks[movedToIndex].unshift(stacks[movedFromIndex].shift());
+    }
+  }
+  return stacks;
+};
+
+// console.log(moveStacks(readyStacks, instructionIntegers))
+
+const moveStacks9001 = (stacks, instructions) => {
+  for (let instruction of instructions) {
+    let amountMoved = instruction[0];
+    let movedFromIndex = instruction[1] - 1;
+    let movedToIndex = instruction[2] - 1;
+    if (amountMoved === 1) {
+      stacks[movedToIndex].unshift(stacks[movedFromIndex].shift());
+    } else {
+      for (let i = amountMoved - 1; i > -1; i--) {
+        stacks[movedToIndex].unshift(stacks[movedFromIndex][i])
+        stacks[movedFromIndex].splice(i,1)
+      }
+    }
+  }
+  return stacks;
+};
+
+console.log(moveStacks9001(readyStacks, instructionIntegers));
